@@ -25,7 +25,7 @@ function SearchSettings() {
     return (
         <div className="searchSettings">
             <Collapse
-                defaultActiveKey={['1']}
+                collapsible="icon"
                 items={items}
                 ghost={true}
                 expandIcon={() => genExtra()}
