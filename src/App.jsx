@@ -4,7 +4,15 @@ import SearchSettings from './components/SearchSettings';
 import SearchTabs from './components/SearchTabs';
 
 function App() {
+    const settingsConfig = {
+        enableDeepSearch: true,
+        excludeWords: localStorage.getItem('excludeWords')
+            ? localStorage.getItem('excludeWords')
+            : 'csdn',
+    };
     const [searchText, setSearchText] = useState('');
+
+    const [settingConfig, setSettingConfig] = useState(settingsConfig);
     return (
         <div className="app">
             <header>
@@ -12,10 +20,17 @@ function App() {
                     <h1>你就不能搜索一下吗?</h1>
                 </div>
                 <SearchInput setSearchText={setSearchText} />
-                <SearchSettings />
+                <SearchSettings
+                    settingsConfig={settingsConfig}
+                    setSettingConfig={setSettingConfig}
+                />
             </header>
             <main>
-                <SearchTabs searchText={searchText} />
+                <SearchTabs
+                    searchText={searchText}
+                    settingConfig={settingConfig}
+                    setSettingConfig={setSettingConfig}
+                />
             </main>
             {/* <footer>footer</footer> */}
         </div>

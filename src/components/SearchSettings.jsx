@@ -1,12 +1,8 @@
 import { SettingOutlined } from '@ant-design/icons';
 import React from 'react';
 import { Collapse } from 'antd';
-const text = `
-  A dog is a type of domesticated animal.
-  Known for its loyalty and faithfulness,
-  it can be found as a welcome guest in many households across the world.
-`;
-function SearchSettings() {
+import SearchSettingsContent from './SearchSettingsContent';
+function SearchSettings({ settingsConfig, setSettingConfig }) {
     const genExtra = () => (
         <SettingOutlined
             onClick={(event) => {
@@ -19,7 +15,12 @@ function SearchSettings() {
         {
             key: '1',
             label: '',
-            children: <div>{text}</div>,
+            children: (
+                <SearchSettingsContent
+                    settingsConfig={settingsConfig}
+                    setSettingConfig={setSettingConfig}
+                />
+            ),
         },
     ];
     return (

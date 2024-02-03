@@ -4,7 +4,7 @@ const { Search } = Input;
 
 import { useState } from 'react';
 import { useEffect } from 'react';
-function ListItem({ result, randomColor, searchText }) {
+function ListItem({ result, randomColor, searchText, settingConfig }) {
     const [value, setValue] = useState('');
 
     useEffect(() => {
@@ -17,13 +17,26 @@ function ListItem({ result, randomColor, searchText }) {
 
     const onSearch = () => {
         let fullURL = '';
-        if (!result.keyword) {
-            fullURL = result.searchUrl;
-        } else {
-            fullURL = result.searchUrl + value;
+        let searchFields = '';
+        let excludeFields = '';
+
+        if (result.keyword && settingConfig.excludeWords != '') {
+            if (settingConfig.excludeWords.includes('|')) {
+                const words = settingConfig.excludeWords?.split('|');
+                const newWords = words.map((word) => '-' + word).join(' ');
+                excludeFields = newWords;
+            } else {
+                excludeFields = settingConfig.excludeWords;
+            }
+            searchFields = settingConfig.enableDeepSearch
+                ? `\"${value}\" ${excludeFields}`
+                : `${value} ${excludeFields}`;
         }
-        console.log(fullURL);
+
+        fullURL = result.searchUrl + searchFields;
+        window.open(fullURL, '_blank');
     };
+
     return (
         <div>
             <List.Item className="list-item">
