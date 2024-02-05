@@ -15,12 +15,8 @@ function SearchSettingsContent({ settingsConfig, setSettingConfig }) {
     }, []);
 
     const handleBlur = (e) => {
-        const regex = /^([^ \|]+|([^ \|\n]+[^ \n]+ *\|)+[^\|\n]+[^ \|])$/gm;
+        const regex = /^([^ \|]+||([^ \|\n]+[^ \n]+ *\|)+[^\|\n]+[^ \|])$/gm;
 
-        if (e.target.value.trim() === '') {
-            message.error('内容不能为空');
-            return;
-        }
         if (e.target.value.match(regex)) {
             message.success('成功更新排除关键字');
             setValue(e.target.value);

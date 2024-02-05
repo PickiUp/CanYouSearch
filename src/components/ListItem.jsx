@@ -4,6 +4,7 @@ const { Search } = Input;
 
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { message } from 'antd';
 function ListItem({ result, randomColor, searchText, settingConfig }) {
     const [value, setValue] = useState('');
 
@@ -19,14 +20,15 @@ function ListItem({ result, randomColor, searchText, settingConfig }) {
         let fullURL = '';
         let searchFields = '';
         let excludeFields = '';
+        const hostRegex = /https?:\/\/([\w-]+\.[\w-]{1,63}(?:\.\w*)?\/?)/;
 
-        if (result.keyword && settingConfig.excludeWords != '') {
-            if (settingConfig.excludeWords.includes('|')) {
+        if (result.keyword) {
+            if (settingConfig.excludeWords.trim().includes('|')) {
                 const words = settingConfig.excludeWords?.split('|');
                 const newWords = words.map((word) => '-' + word).join(' ');
                 excludeFields = newWords;
             } else {
-                excludeFields = settingConfig.excludeWords;
+                excludeFields = '-' + settingConfig.excludeWords;
             }
             searchFields = settingConfig.enableDeepSearch
                 ? `\"${value}\" ${excludeFields}`
@@ -34,7 +36,11 @@ function ListItem({ result, randomColor, searchText, settingConfig }) {
         }
 
         fullURL = result.searchUrl + searchFields;
-        window.open(fullURL, '_blank');
+        message.info(`即将访问--->${result.searchUrl.match(hostRegex)[0]}`);
+
+        setTimeout(() => {
+            window.open(fullURL, '_blank');
+        }, 3000);
     };
 
     return (
