@@ -10,9 +10,13 @@ function App() {
             ? localStorage.getItem('excludeWords')
             : 'csdn',
     };
+
     const [searchText, setSearchText] = useState('');
 
     const [settingConfig, setSettingConfig] = useState(settingsConfig);
+
+    const [hasReload, setHasReload] = useState(true);
+
     return (
         <div className="app">
             <header>
@@ -27,6 +31,8 @@ function App() {
             </header>
             <main>
                 <SearchTabs
+                    setHasReload={setHasReload}
+                    hasReload={hasReload}
                     searchText={searchText}
                     settingConfig={settingConfig}
                     setSettingConfig={setSettingConfig}

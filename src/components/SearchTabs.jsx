@@ -2,7 +2,7 @@ import React from 'react';
 import { Tabs, List } from 'antd';
 import { tabs } from '../data/data';
 import ListItem from './ListItem';
-function SearchTabs({ searchText, settingConfig }) {
+function SearchTabs({ searchText, settingConfig, hasReload, setHasReload }) {
     const colors = [
         'pink',
         'red',
@@ -36,11 +36,14 @@ function SearchTabs({ searchText, settingConfig }) {
                         children: (
                             <List
                                 size="large"
-                                bordered={true}
                                 loadMore
                                 dataSource={tab.results}
-                                renderItem={(result) => (
+                                renderItem={(result, index) => (
                                     <ListItem
+                                        results={tab.results}
+                                        setHasReload={setHasReload}
+                                        hasReload={hasReload}
+                                        itemIndex={index}
                                         settingConfig={settingConfig}
                                         result={result}
                                         randomColor={randomColor()}

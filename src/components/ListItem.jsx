@@ -5,15 +5,47 @@ const { Search } = Input;
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { message } from 'antd';
-function ListItem({ result, randomColor, searchText, settingConfig }) {
+function ListItem({
+    result,
+    randomColor,
+    searchText,
+    settingConfig,
+    itemIndex,
+    hasReload,
+    setHasReload,
+    results,
+}) {
     const [value, setValue] = useState('');
+    const [valueChange, setValueChange] = useState(false);
 
     useEffect(() => {
         setValue(searchText);
+        if (searchText === '') return;
+        localStorage.setItem(`listItem${itemIndex}`, searchText);
+        if (itemIndex === results.length - 1) {
+            message.success(`保存搜索内容至本地储存（localstorage)`);
+        }
     }, [searchText]);
 
-    const handleChange = (e) => {
-        setValue(e.target.value);
+    useEffect(() => {
+        if (localStorage.getItem(`listItem${itemIndex}`) && hasReload) {
+            setValue(localStorage.getItem(`listItem${itemIndex}`));
+            if (itemIndex === results.length - 1) {
+                message.success(`已从本地储存加载搜索内容`);
+                setHasReload(false);
+            }
+        }
+        setValueChange(true);
+    }, [value]);
+
+    const handleBlur = (e) => {
+        const text = e.target.value;
+        if (text === '') return;
+        if (valueChange) {
+            localStorage.setItem(`listItem${itemIndex}`, text);
+            message.success(`保存搜索内容 "${text}" 至本地储存（localstorage)`);
+        }
+        setValueChange(false);
     };
 
     const onSearch = () => {
@@ -23,12 +55,18 @@ function ListItem({ result, randomColor, searchText, settingConfig }) {
         const hostRegex = /https?:\/\/([\w-]+\.[\w-]{1,63}(?:\.\w*)?\/?)/;
 
         if (result.keyword) {
-            if (settingConfig.excludeWords.trim().includes('|')) {
+            if (
+                settingConfig.excludeWords &&
+                settingConfig.excludeWords.trim().includes('|')
+            ) {
                 const words = settingConfig.excludeWords?.split('|');
                 const newWords = words.map((word) => '-' + word).join(' ');
                 excludeFields = newWords;
             } else {
-                excludeFields = '-' + settingConfig.excludeWords;
+                console.log(settingConfig.excludeWords);
+                excludeFields =
+                    (settingConfig.excludeWords ? '-' : '') +
+                    settingConfig.excludeWords;
             }
             searchFields = settingConfig.enableDeepSearch
                 ? `\"${value}\" ${excludeFields}`
@@ -36,7 +74,8 @@ function ListItem({ result, randomColor, searchText, settingConfig }) {
         }
 
         fullURL = result.searchUrl + searchFields;
-        message.info(`即将访问--->${result.searchUrl.match(hostRegex)[0]}`);
+        console.log(fullURL);
+        message.info(`即将访问: ${result.searchUrl.match(hostRegex)[0]}`);
 
         setTimeout(() => {
             window.open(fullURL, '_blank');
@@ -63,10 +102,11 @@ function ListItem({ result, randomColor, searchText, settingConfig }) {
                     data-url={result.searchUrl}
                     data-keyword={result.keyword}
                     onChange={(e) => {
-                        handleChange(e);
+                        setValue(e.target.value);
                     }}
                     value={value}
                     showCount
+                    onBlur={handleBlur}
                     style={{
                         width: 304,
                     }}
