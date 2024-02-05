@@ -8,13 +8,15 @@
     flex-direction: column;
     width: 100vw;
     height: 100vh;
+    overflow: auto;
+
     header {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         gap: 10px;
-        padding: 20px;
+        padding: 40px 20px 0;
         width: 100%;
         // height: auto;
         .searchInput {
@@ -40,24 +42,27 @@
     main {
         width: 100%;
         padding: 10px 20px;
-        .list-item {
-            display: flex;
-            gap: 20px;
-            .pic {
-                width: 30px;
-                height: 30px;
-                min-height: 30px;
-                img {
-                    width: 100%;
-                    height: 100%;
-                    object-fit: cover;
+        .ant-list-items {
+            padding: 0 100px;
+            .list-item {
+                display: flex;
+                gap: 20px;
+                .pic {
+                    width: 30px;
+                    height: 30px;
+                    min-height: 30px;
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                    }
+                }
+                .ant-input-group-wrapper {
+                    flex: 1;
+                    width: 100% !important;
+                    min-width: 200px;
                 }
             }
-        }
-        .ant-input-group-wrapper {
-            flex: 1;
-            width: 100% !important;
-            min-width: 200px;
         }
     }
     footer {
