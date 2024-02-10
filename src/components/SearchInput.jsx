@@ -2,15 +2,16 @@ import React from 'react';
 import { Input } from 'antd';
 const { Search } = Input;
 function SearchInput({ setSearchText }) {
-    const handleOnchange = (e) => {
+    function handleOnBlur(e) {
+        console.log(e.target.value);
         setSearchText(e.target.value);
-    };
+    }
     return (
         <div className="searchInput">
             <Search
                 placeholder="input search text"
                 enterButton
-                onChange={handleOnchange}
+                onBlur={handleOnBlur}
                 allowClear
                 size="middle"
             />
