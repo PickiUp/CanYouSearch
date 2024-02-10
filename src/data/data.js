@@ -269,8 +269,6 @@ export const tabs = [
             sites.fsoufsou,
             sites.yandex,
             sites.wikipedia,
-            sites.github,
-            sites.zhihu,
         ],
     },
     {

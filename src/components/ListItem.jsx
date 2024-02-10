@@ -14,6 +14,7 @@ function ListItem({
     hasReload,
     setHasReload,
     results,
+    tabName,
 }) {
     const [value, setValue] = useState('');
     const [valueChange, setValueChange] = useState(false);
@@ -54,7 +55,14 @@ function ListItem({
         let excludeFields = '';
         const hostRegex = /https?:\/\/([\w-]+\.[\w-]{1,63}(?:\.\w*)?\/?)/;
 
-        if (result.keyword) {
+        if (!result.keyword) {
+            searchFields = '';
+        } else {
+            searchFields = settingConfig.enableDeepSearch
+                ? `\"${value}\"`
+                : `${value}`;
+        }
+        if (tabName === '搜索引擎') {
             if (
                 settingConfig.excludeWords &&
                 settingConfig.excludeWords.trim().includes('|')
@@ -68,9 +76,7 @@ function ListItem({
                     (settingConfig.excludeWords ? '-' : '') +
                     settingConfig.excludeWords;
             }
-            searchFields = settingConfig.enableDeepSearch
-                ? `\"${value}\" ${excludeFields}`
-                : `${value} ${excludeFields}`;
+            searchFields = searchFields + ' ' + excludeFields;
         }
 
         fullURL = result.searchUrl + searchFields;

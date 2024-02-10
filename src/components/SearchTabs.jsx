@@ -40,6 +40,7 @@ function SearchTabs({ searchText, settingConfig, hasReload, setHasReload }) {
                                 dataSource={tab.results}
                                 renderItem={(result, index) => (
                                     <ListItem
+                                        tabName={tab.name}
                                         results={tab.results}
                                         setHasReload={setHasReload}
                                         hasReload={hasReload}
