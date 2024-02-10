@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import Joyride from 'react-joyride';
+import { FloatButton } from 'antd';
+import { QuestionCircleOutlined } from '@ant-design/icons';
 import SearchInput from './components/SearchInput';
 import SearchSettings from './components/SearchSettings';
 import SearchTabs from './components/SearchTabs';
@@ -18,6 +20,7 @@ function App() {
 
     const [hasReload, setHasReload] = useState(true);
 
+    const [run, setRun] = useState(false);
     const steps = [
         {
             target: '.searchInput  .ant-input-affix-wrapper',
@@ -60,11 +63,18 @@ function App() {
             </main>
             {/* <footer>footer</footer> */}
             <Joyride
+                run={run}
                 steps={steps}
                 continuous={true}
                 showProgress={true}
                 showSkipButton={true}
             />
+            <FloatButton
+                icon={<QuestionCircleOutlined />}
+                onClick={() => setRun(!run)}
+                tooltip={'帮助'}
+            />
+            ;
         </div>
     );
 }
