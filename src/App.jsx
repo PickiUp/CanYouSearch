@@ -61,7 +61,49 @@ function App() {
                     setSettingConfig={setSettingConfig}
                 />
             </main>
-            {/* <footer>footer</footer> */}
+            <footer>
+                <section className="footer-container">
+                    <section className="footer-columns">
+                        <div className="footer-column">
+                            <div className="footer-item">
+                                <h2>相关资源</h2>
+                            </div>
+                            <div className="footer-item">
+                                <a
+                                    href="https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way"
+                                    target="_blank"
+                                    rel="noopener noreferrer">
+                                    《提问的智慧》
+                                </a>
+                            </div>
+                            <div className="footer-item">
+                                <a
+                                    href="https://github.com/seajs/seajs/issues/545"
+                                    target="_blank"
+                                    rel="noopener noreferrer">
+                                    《如何向开源社区提问题》
+                                </a>
+                            </div>
+                            <div className="footer-item">
+                                <a
+                                    href="http://www.chiark.greenend.org.uk/%7Esgtatham/bugs-cn.html"
+                                    target="_blank"
+                                    rel="noopener noreferrer">
+                                    《如何有效地报告 Bug》
+                                </a>
+                            </div>
+                            <div className="footer-item">
+                                <a
+                                    href="https://zhuanlan.zhihu.com/p/25795393"
+                                    target="_blank"
+                                    rel="noopener noreferrer">
+                                    《如何向开源项目提交无法解答的问题》
+                                </a>
+                            </div>
+                        </div>
+                    </section>
+                </section>
+            </footer>
             <Joyride
                 run={run}
                 steps={steps}
